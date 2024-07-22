@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign, verify } from 'hono/jwt'
-import { signupInput } from "merajj-common";
+import { signinInput, signupInput } from "merajj-common";
 
 
 
@@ -31,11 +31,12 @@ userRouter.post('/signup', async(c)=>{
 		const user = await prisma.user.create({ 
 			data: {
 				email: body.email,        
-				password: body.password
+				password: body.password,
+				name: body.name
 			},
 		})
 		const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-		return c.json({ jwt });
+		return c.text(jwt);
 	} catch (error) {
 		c.status(411);
 		return c.text('Invalid');
@@ -47,6 +48,14 @@ userRouter.post('/signup', async(c)=>{
 
 userRouter.post('/signin', async(c) => {
 	const body = await c.req.json();
+	const{ success } = signinInput.safeParse(body)
+    if(!success){
+         c.status(411);
+         return c.json({
+            message: "invalid credentials"
+         })
+    }
+	
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env.DATABASE_URL,
 	}).$extends(withAccelerate());
@@ -63,7 +72,8 @@ userRouter.post('/signin', async(c) => {
 			
 		}
 		const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
-			return c.json({ message: jwt});
+			return c.text(jwt);
+			
 		
 	} catch (error) {
 		c.status(403);
