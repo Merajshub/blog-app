@@ -5,7 +5,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        zentry:['zentry','sans-serif']
+      },
+      colors:{
+        orangeneo: '#F45203'
+      }
+    },
   },
   plugins: [],
 }

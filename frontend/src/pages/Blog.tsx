@@ -32,8 +32,8 @@ export const Blog = ()=>{
                 <div className="text-slate-500 pt-2">
                     Posted on 8 Dec 2021
                 </div>
-            <div className="pt-4">
-                {blog?.content}
+            <div dangerouslySetInnerHTML={{ __html:blog?.content??""}} className="pt-4">
+                
             </div>
             </div>
             <div className="">

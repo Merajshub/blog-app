@@ -39,12 +39,13 @@ export const Auth=({type}: {type: "signup" | "signin"})=>{
         try {
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/${type==='signup'?'signup' : 'signin'}`,postInput);
             const jwt = res.data;
-            localStorage.setItem('token',jwt);
+            localStorage.setItem('token',jwt);   
             navigate('/blogs');
-            
+
             
         } catch (error) {
             alert("Invalid user");
+            
             
         }
 
@@ -54,7 +55,8 @@ export const Auth=({type}: {type: "signup" | "signin"})=>{
     return <div className="flex flex-col justify-center ">
     <div className="mb-10 ">
     <h1 className="text-center  text-2xl font-medium "> Create an account</h1>
-    <h2 className="text-center text-gray-500">{type === "signin" ? "Don't have an account?": "Already have an account?"}<Link className="hover:underline" to={type ==="signin" ? "/signup" : "/signin"}>{type === "signin" ? " Signup" : " Signin"}</Link></h2>
+    <h2 className="text-center text-gray-500">{type === "signin" ? "Don't have an account?": "Already have an account?"}
+        <Link className="hover:underline" to={type ==="signin" ? "/signup" : "/signin"}>{type === "signin" ? " Signup" : " Signin"}</Link></h2>
     </div>
        <div className="">
       <form className="flex flex-col gap-2 max-w-md mx-auto" onSubmit ={sendRequest}>
@@ -64,7 +66,7 @@ export const Auth=({type}: {type: "signup" | "signin"})=>{
       <input type="text" id="email" placeholder="email" className="border rounded-md p-2"onChange={handleChange}/>
       <label className="font-semibold">Password</label>
       <input type="password" id="password" placeholder="password" className="border rounded-md p-2" onChange={handleChange}/>
-      <button className="bg-black text-white p-2 rounded-md mt-6" >Signup</button>
+      <button className="bg-black text-white p-2 rounded-md mt-6 uppercase hover:shadow-[5px_5px_0px_#f472b6]  hover:-translate-y-[4px] hover:-translate-x-[4px]" >{type === "signin" ? "Signin" : "Signup"}</button>
 
         </form>
         </div>

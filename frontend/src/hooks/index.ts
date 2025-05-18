@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
+
+
 
 interface Blog{
     content: string,
@@ -14,8 +17,11 @@ interface Blog{
 }
 
 export const useBlogs = ()=>{
+    
     const[loading,setLoading] = useState(true);
     const [blogs,setBlogs] = useState<Blog[]>([]);
+    const navigate = useNavigate();
+    
     useEffect(()=>{
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`,
             {
@@ -24,11 +30,28 @@ export const useBlogs = ()=>{
                 }
             }
         ).then(response=>{
+            
+            if(response.data!=null){
+                
+                
             setBlogs(response.data.blogs);
             setLoading(false);
-        })
+            
+            
+            }
+            else{
+                navigate('/signin')
+                
+            }
+            
+        }).catch(error => {
+            // Handle any errors that occur during the request
+            console.error('Error fetching blogs:', error);
+            navigate('/signin');
+            
+          });
 
-    },[])
+    },[navigate])
 
     return {
         loading,
