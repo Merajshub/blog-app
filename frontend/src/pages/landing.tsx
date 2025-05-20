@@ -8,6 +8,7 @@ export const Landing = ()=>{
     const [currentValue,setCurrentValue]= useState(0);
     const [showLoader,setShowLoader] = useState(true);
     const [showNav,setShowNav] = useState(false);
+    const [email,setEmail] = useState('')
     const myRef = useRef(null);
     const navigate  = useNavigate();
     
@@ -80,7 +81,7 @@ export const Landing = ()=>{
    {showLoader && <h1 ref={myRef} className=" font-zentry counter text-neutral-200 text-[20vw] w-full h-full fixed flex justify-end items-end z-[10000]">{currentValue}</h1>}
    <div className="fixed w-screen h-screen z-50 flex">
     {Array.from({length:10}).map((_,i)=>
-        (<div key={i} className="bar w-[10vw] h-[105vw] bg-black"></div>)
+        (<div key={i} className="bar w-[10vw] h-screen md:h-[105vw] bg-black"></div>)
     )}
    </div>
    <div className="container">
@@ -109,11 +110,11 @@ export const Landing = ()=>{
         <button className="p-4 bg-white cursor-pointer shadow-2xl hover:bg-violet-600" >Sign up</button>
     </div> */}
     <div className="w-screen flex justify-between px-[2em]">
-        <div className="head text-black special-font relative text-[24vw] leading-[1.2]"><b>b</b></div>
-        <div className="head text-black special-font relative text-[24vw] leading-[1.2]"><b>l</b></div>
-        <div className="head text-black special-font relative text-[24vw] leading-[1.2]"><b>o</b></div>
-        <div className="head text-black font-zentry  relative text-[24vw] leading-[1.2]">G</div>
-        <div className="head text-black font-zentry  relative text-[24vw] leading-[1.2]">.</div>
+        <div className="head text-black special-font relative text-[24vw] leading-[2.4] md:leading-[1.2]"><b>b</b></div>
+        <div className="head text-black special-font relative text-[24vw] leading-[2.4] md:leading-[1.2]"><b>l</b></div>
+        <div className="head text-black special-font relative text-[24vw] leading-[2.4] md:leading-[1.2]"><b>o</b></div>
+        <div className="head text-black font-zentry  relative text-[24vw] leading-[2.4] md:leading-[1.2]">G</div>
+        <div className="head text-black font-zentry  relative text-[24vw] leading-[2.4] md:leading-[1.2]">.</div>
 
     </div>
     <div className=" hero relative h-full mx-auto rounded-md border-4 border-black overflow-hidden" style={{width: 'calc(100vw - 10em)'}}>
@@ -121,5 +122,28 @@ export const Landing = ()=>{
     </div>
 
    </div>
+   { !showLoader &&
+
+   <footer className=" bg-black md:hidden w-full fixed bottom-0 h-70 z-50">
+   <div className="text-white  px-4 flex-col space-y-5">
+    <div>
+    <p>Stay in the loop</p>
+    <p className="text-gray-400">Subscribe for the latest news & updates.</p>
+    </div>
+    <div>
+    <input type="text" value={email} placeholder="my@email.com" onChange={(e)=>setEmail(e.target.value)}  className="rounded-md px-2 py-2 w-full bg-gray-800"/>
+    <button className="bg-white text-black rounded-md px-4 py-2 w-full mt-2">Subscribe</button>
+    </div>
+    <hr />
+    <div>
+    <img src="/blobbb.png" alt="logo" className="w-[60px] rounded-md" />
+    <p className=" text-gray-400 ">©2025 Blog Division Ltd.</p>
+    </div>
+
+
+   </div>
+   </footer>
+   }
+   
     </div>
 }
